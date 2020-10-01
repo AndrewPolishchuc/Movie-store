@@ -1,6 +1,6 @@
 package movie.storage.util;
 
-import movie.storage.exception.IncorrectDataHandlingException;
+import movie.storage.exception.IncorrectDataException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -14,7 +14,7 @@ public class HibernateUtil {
         try {
             return new Configuration().configure().buildSessionFactory();
         } catch (Exception e) {
-            throw new IncorrectDataHandlingException("Failed to build SessionFactory", e);
+            throw new IncorrectDataException("Failed to build SessionFactory", e);
         }
     }
 
