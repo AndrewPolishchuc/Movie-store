@@ -14,7 +14,7 @@ public class HibernateUtil {
         try {
             return new Configuration().configure().buildSessionFactory();
         } catch (Exception e) {
-            throw new IncorrectDataException("Failed to build SessionFactory", e);
+            throw new RuntimeException("Failed to build SessionFactory", e);
         }
     }
 
