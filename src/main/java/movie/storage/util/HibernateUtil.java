@@ -1,6 +1,5 @@
 package movie.storage.util;
 
-import movie.storage.exception.IncorrectDataException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
