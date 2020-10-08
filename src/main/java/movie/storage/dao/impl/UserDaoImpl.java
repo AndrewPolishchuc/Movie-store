@@ -2,7 +2,7 @@ package movie.storage.dao.impl;
 
 import java.util.Optional;
 import movie.storage.dao.UserDao;
-import movie.storage.exception.IncorrectDataException;
+import movie.storage.exception.DataProcessingException;
 import movie.storage.lib.Dao;
 import movie.storage.model.User;
 import movie.storage.util.HibernateUtil;
@@ -25,7 +25,7 @@ public class UserDaoImpl implements UserDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new IncorrectDataException("Unable to add user" + user, e);
+            throw new DataProcessingException("Unable to add user" + user, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -39,8 +39,6 @@ public class UserDaoImpl implements UserDao {
             return session.createQuery("from User where email= :email", User.class)
                     .setParameter("email", email)
                     .uniqueResultOptional();
-        } catch (Exception e) {
-            throw new IncorrectDataException("Unable to find user with email - " + email, e);
         }
     }
 }

@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import movie.storage.dao.MovieSessionDao;
-import movie.storage.exception.IncorrectDataException;
+import movie.storage.exception.DataProcessingException;
 import movie.storage.lib.Dao;
 import movie.storage.model.MovieSession;
 import movie.storage.util.HibernateUtil;
@@ -42,7 +42,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new IncorrectDataException("Unable to add new movie session - "
+            throw new DataProcessingException("Unable to add new movie session - "
                     + movieSession, e);
         } finally {
             if (session != null) {

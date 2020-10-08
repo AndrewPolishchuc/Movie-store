@@ -2,7 +2,7 @@ package movie.storage.dao.impl;
 
 import java.util.List;
 import movie.storage.dao.MovieDao;
-import movie.storage.exception.IncorrectDataException;
+import movie.storage.exception.DataProcessingException;
 import movie.storage.lib.Dao;
 import movie.storage.model.Movie;
 import movie.storage.util.HibernateUtil;
@@ -25,7 +25,7 @@ public class MovieDaoImpl implements MovieDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new IncorrectDataException("Unable to add movie", e);
+            throw new DataProcessingException("Unable to add movie", e);
         } finally {
             if (session != null) {
                 session.close();
@@ -39,7 +39,7 @@ public class MovieDaoImpl implements MovieDao {
             Query<Movie> getAllMoviesQuery = session.createQuery("from Movie", Movie.class);
             return getAllMoviesQuery.getResultList();
         } catch (Exception e) {
-            throw new IncorrectDataException("Can't get movies", e);
+            throw new DataProcessingException("Can't get movies", e);
         }
     }
 }

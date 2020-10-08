@@ -2,7 +2,7 @@ package movie.storage.dao.impl;
 
 import java.util.List;
 import movie.storage.dao.CinemaHallDao;
-import movie.storage.exception.IncorrectDataException;
+import movie.storage.exception.DataProcessingException;
 import movie.storage.lib.Dao;
 import movie.storage.model.CinemaHall;
 import movie.storage.util.HibernateUtil;
@@ -26,7 +26,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new IncorrectDataException("Unable to add new cinema hall" + cinemaHall, e);
+            throw new DataProcessingException("Unable to add new cinema hall" + cinemaHall, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -42,7 +42,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
                     = session.createQuery("from CinemaHall", CinemaHall.class);
             return getAllCinemaHalls.getResultList();
         } catch (Exception e) {
-            throw new IncorrectDataException("Unable to get all cinema halls", e);
+            throw new DataProcessingException("Unable to get all cinema halls", e);
         }
     }
 }
