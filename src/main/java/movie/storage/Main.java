@@ -2,7 +2,6 @@ package movie.storage;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import movie.storage.exception.AuthenticationException;
 import movie.storage.lib.Injector;
 import movie.storage.model.CinemaHall;
 import movie.storage.model.Movie;
@@ -12,6 +11,7 @@ import movie.storage.service.AuthenticationService;
 import movie.storage.service.CinemaHallService;
 import movie.storage.service.MovieService;
 import movie.storage.service.MovieSessionService;
+import movie.storage.service.ShoppingCartService;
 
 public class Main {
     private static Injector injector = Injector.getInstance("movie.storage");
@@ -52,13 +52,11 @@ public class Main {
                 .findAvailableSessions(2L, LocalDate.of(2019, 01, 15)));
         AuthenticationService authenticationService
                 = (AuthenticationService) injector.getInstance(AuthenticationService.class);
-        authenticationService.register("alisa@gmail.com", "12345");
-        authenticationService.register("bob@gmail.com", "12345");
-        try {
-            User alisa = authenticationService.login("alisa@gmail.com", "12345");
-            User bob = authenticationService.login("bob@gmail.com", "12345");
-        } catch (AuthenticationException e) {
-            throw new RuntimeException("Login failed", e);
-        }
+        User alisa = new User("alisa@gmail.com", "12345");
+        authenticationService.register(alisa.getEmail(), alisa.getPassword());
+        ShoppingCartService shoppingCartService
+                = (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
+        shoppingCartService.addSession(firstMovieSession, alisa);
+        shoppingCartService.addSession(secondMovieSession, alisa);
     }
 }

@@ -6,6 +6,7 @@ import movie.storage.lib.Inject;
 import movie.storage.lib.Service;
 import movie.storage.model.User;
 import movie.storage.service.AuthenticationService;
+import movie.storage.service.ShoppingCartService;
 import movie.storage.service.UserService;
 import movie.storage.util.HashUtil;
 
@@ -13,6 +14,8 @@ import movie.storage.util.HashUtil;
 public class AuthenticationServiceImpl implements AuthenticationService {
     @Inject
     private UserService userService;
+    @Inject
+    private ShoppingCartService shoppingCartService;
 
     @Override
     public User login(String email, String password) throws AuthenticationException {
@@ -28,7 +31,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         User user = new User();
         user.setEmail(email);
         user.setPassword(password);
-        userService.add(user);
+        user = userService.add(user);
+        shoppingCartService.registerNewShoppingCart(user);
         return user;
     }
 
