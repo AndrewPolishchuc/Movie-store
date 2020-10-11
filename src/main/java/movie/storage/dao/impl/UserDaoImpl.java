@@ -1,48 +1,44 @@
 package movie.storage.dao.impl;
 
-import java.util.List;
-import movie.storage.dao.CinemaHallDao;
+import java.util.Optional;
+import movie.storage.dao.UserDao;
 import movie.storage.exception.DataProcessingException;
 import movie.storage.lib.Dao;
-import movie.storage.model.CinemaHall;
+import movie.storage.model.User;
 import movie.storage.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 @Dao
-public class CinemaHallDaoImpl implements CinemaHallDao {
+public class UserDaoImpl implements UserDao {
     @Override
-    public CinemaHall add(CinemaHall cinemaHall) {
+    public User add(User user) {
         Session session = null;
         Transaction transaction = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            session.save(cinemaHall);
+            session.save(user);
             transaction.commit();
-            return cinemaHall;
+            return user;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Unable to add new cinema hall" + cinemaHall, e);
+            throw new DataProcessingException("Unable to add user" + user, e);
         } finally {
             if (session != null) {
                 session.close();
             }
         }
-
     }
 
     @Override
-    public List<CinemaHall> getAll() {
+    public Optional<User> findByEmail(String email) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<CinemaHall> getAllCinemaHalls
-                    = session.createQuery("from CinemaHall", CinemaHall.class);
-            return getAllCinemaHalls.getResultList();
-        } catch (Exception e) {
-            throw new DataProcessingException("Unable to get all cinema halls", e);
+            return session.createQuery("from User where email= :email", User.class)
+                    .setParameter("email", email)
+                    .uniqueResultOptional();
         }
     }
 }

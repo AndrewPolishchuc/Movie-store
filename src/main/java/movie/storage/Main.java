@@ -2,10 +2,13 @@ package movie.storage;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import movie.storage.exception.AuthenticationException;
 import movie.storage.lib.Injector;
 import movie.storage.model.CinemaHall;
 import movie.storage.model.Movie;
 import movie.storage.model.MovieSession;
+import movie.storage.model.User;
+import movie.storage.service.AuthenticationService;
 import movie.storage.service.CinemaHallService;
 import movie.storage.service.MovieService;
 import movie.storage.service.MovieSessionService;
@@ -45,8 +48,17 @@ public class Main {
         movieSessionService.add(secondMovieSession);
         System.out.println(movieSessionService
                 .findAvailableSessions(1L, LocalDate.of(2020, 01, 02)));
-
         System.out.println(movieSessionService
                 .findAvailableSessions(2L, LocalDate.of(2019, 01, 15)));
+        AuthenticationService authenticationService
+                = (AuthenticationService) injector.getInstance(AuthenticationService.class);
+        authenticationService.register("alisa@gmail.com", "12345");
+        authenticationService.register("bob@gmail.com", "12345");
+        try {
+            User alisa = authenticationService.login("alisa@gmail.com", "12345");
+            User bob = authenticationService.login("bob@gmail.com", "12345");
+        } catch (AuthenticationException e) {
+            throw new RuntimeException("Login failed", e);
+        }
     }
 }
