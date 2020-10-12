@@ -1,6 +1,5 @@
 package movie.storage.dao.impl;
 
-import java.io.Serializable;
 import java.util.Optional;
 import movie.storage.dao.UserDao;
 import movie.storage.exception.DataProcessingException;

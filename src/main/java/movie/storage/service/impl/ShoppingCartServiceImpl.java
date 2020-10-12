@@ -1,8 +1,6 @@
 package movie.storage.service.impl;
 
 import java.util.ArrayList;
-
-import movie.storage.dao.MovieSessionDao;
 import movie.storage.dao.ShoppingCartDao;
 import movie.storage.dao.TicketDao;
 import movie.storage.dao.UserDao;
