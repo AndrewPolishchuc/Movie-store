@@ -3,15 +3,17 @@ package movie.storage;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import movie.storage.lib.Injector;
-import movie.storage.model.CinemaHall;
+import movie.storage.model.ShoppingCart;
 import movie.storage.model.Movie;
 import movie.storage.model.MovieSession;
 import movie.storage.model.User;
-import movie.storage.service.AuthenticationService;
-import movie.storage.service.CinemaHallService;
-import movie.storage.service.MovieService;
-import movie.storage.service.MovieSessionService;
+import movie.storage.model.CinemaHall;
 import movie.storage.service.ShoppingCartService;
+import movie.storage.service.MovieService;
+import movie.storage.service.CinemaHallService;
+import movie.storage.service.MovieSessionService;
+import movie.storage.service.AuthenticationService;
+import movie.storage.service.OrderService;
 
 public class Main {
     private static Injector injector = Injector.getInstance("movie.storage");
@@ -60,5 +62,9 @@ public class Main {
         shoppingCartService.addSession(firstMovieSession, user);
         shoppingCartService.addSession(secondMovieSession, user);
         shoppingCartService.addSession(firstMovieSession, bob);
+        OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
+        ShoppingCart shoppingCart = shoppingCartService.getByUser(bob);
+        orderService.completeOrder(shoppingCart.getTickets(), bob);
+        orderService.getOrderHistory(bob).forEach(System.out::println);
     }
 }
