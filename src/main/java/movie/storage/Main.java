@@ -53,10 +53,12 @@ public class Main {
         AuthenticationService authenticationService
                 = (AuthenticationService) injector.getInstance(AuthenticationService.class);
         User alisa = new User("alisa@gmail.com", "12345");
-        authenticationService.register(alisa.getEmail(), alisa.getPassword());
+        User user = authenticationService.register(alisa.getEmail(), alisa.getPassword());
+        User bob = authenticationService.register("bob@gmail.com", "12345");
         ShoppingCartService shoppingCartService
                 = (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
-        shoppingCartService.addSession(firstMovieSession, alisa);
-        shoppingCartService.addSession(secondMovieSession, alisa);
+        shoppingCartService.addSession(firstMovieSession, user);
+        shoppingCartService.addSession(secondMovieSession, user);
+        shoppingCartService.addSession(firstMovieSession, bob);
     }
 }

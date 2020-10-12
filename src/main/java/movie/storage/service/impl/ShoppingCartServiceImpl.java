@@ -1,8 +1,11 @@
 package movie.storage.service.impl;
 
 import java.util.ArrayList;
+
+import movie.storage.dao.MovieSessionDao;
 import movie.storage.dao.ShoppingCartDao;
 import movie.storage.dao.TicketDao;
+import movie.storage.dao.UserDao;
 import movie.storage.lib.Inject;
 import movie.storage.lib.Service;
 import movie.storage.model.MovieSession;
@@ -17,6 +20,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private ShoppingCartDao shoppingCartDao;
     @Inject
     private TicketDao ticketDao;
+    @Inject
+    private UserDao userDao;
 
     @Override
     public void addSession(MovieSession movieSession, User user) {
