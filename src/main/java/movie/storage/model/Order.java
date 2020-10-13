@@ -1,5 +1,6 @@
 package movie.storage.model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,10 +17,19 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private LocalDateTime orderDate;
     @OneToMany
     private List<Ticket> tickets;
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+    public LocalDateTime getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(LocalDateTime orderDate) {
+        this.orderDate = orderDate;
+    }
 
     public Long getId() {
         return id;
