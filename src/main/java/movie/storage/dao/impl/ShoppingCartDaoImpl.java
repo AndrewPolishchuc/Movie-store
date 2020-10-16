@@ -16,7 +16,6 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 
     @Override
     public ShoppingCart add(ShoppingCart shoppingCart) {
-        logger.info("Add shopping cart");
         Session session = null;
         Transaction transaction = null;
         try {
@@ -42,7 +41,6 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 
     @Override
     public ShoppingCart getByUser(User user) {
-        logger.info("Get user shopping cart");
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("from ShoppingCart sc "
                     + "left join fetch sc.tickets "
@@ -58,7 +56,6 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 
     @Override
     public void update(ShoppingCart shoppingCart) {
-        logger.info("Update shopping cart");
         Session session = null;
         Transaction transaction = null;
         try {

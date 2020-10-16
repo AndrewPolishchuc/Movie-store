@@ -16,7 +16,6 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User add(User user) {
-        logger.info("Add user");
         Session session = null;
         Transaction transaction = null;
         try {

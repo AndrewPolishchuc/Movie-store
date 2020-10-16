@@ -15,7 +15,6 @@ public class TicketDaoImpl implements TicketDao {
 
     @Override
     public Ticket add(Ticket ticket) {
-        logger.info("Add ticket");
         Session session = null;
         Transaction transaction = null;
         try {

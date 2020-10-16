@@ -17,7 +17,6 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     public Movie add(Movie movie) {
-        logger.info("Add movie");
         Transaction transaction = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
@@ -44,8 +43,6 @@ public class MovieDaoImpl implements MovieDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Movie> getAllMoviesQuery = session.createQuery("from Movie", Movie.class);
             return getAllMoviesQuery.getResultList();
-        } catch (Exception e) {
-            throw new DataProcessingException("Can't get movies", e);
         }
     }
 }

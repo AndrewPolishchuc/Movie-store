@@ -17,7 +17,6 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
 
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
-        logger.info("Add cinema hall");
         Session session = null;
         Transaction transaction = null;
         try {
@@ -47,8 +46,6 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             Query<CinemaHall> getAllCinemaHalls
                     = session.createQuery("from CinemaHall", CinemaHall.class);
             return getAllCinemaHalls.getResultList();
-        } catch (Exception e) {
-            throw new DataProcessingException("Unable to get all cinema halls", e);
         }
     }
 }

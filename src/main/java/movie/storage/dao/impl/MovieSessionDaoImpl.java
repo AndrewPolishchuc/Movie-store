@@ -34,7 +34,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public MovieSession add(MovieSession movieSession) {
-        logger.info("Add movie session");
         Transaction transaction = null;
         Session session = null;
         try {
