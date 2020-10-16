@@ -28,7 +28,7 @@ public class Main {
         Movie secondMovie = new Movie();
         secondMovie.setTitle("Suits");
         movieService.add(secondMovie);
-        movieService.getAll().forEach(movie -> logger.info(movie + "is added"));
+        movieService.getAll().forEach(logger::info);
         CinemaHallService cinemaHallService
                 = (CinemaHallService) injector.getInstance(CinemaHallService.class);
         CinemaHall firstCinemaHall = new CinemaHall();
@@ -37,8 +37,7 @@ public class Main {
         CinemaHall secondCinemaHall = new CinemaHall();
         secondCinemaHall.setDescription("hall number 2");
         cinemaHallService.add(secondCinemaHall);
-        cinemaHallService.getAll().forEach(cinemaHal ->
-                logger.info(cinemaHal + "is added"));
+        cinemaHallService.getAll().forEach(logger::info);
         MovieSession firstMovieSession = new MovieSession();
         firstMovieSession.setCinemaHall(firstCinemaHall);
         firstMovieSession.setMovie(firstMovie);
@@ -68,7 +67,6 @@ public class Main {
         OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
         ShoppingCart shoppingCart = shoppingCartService.getByUser(bob);
         orderService.completeOrder(shoppingCart.getTickets(), bob);
-        orderService.getOrderHistory(bob).forEach(order ->
-                logger.info(order + "is added"));
+        orderService.getOrderHistory(bob).forEach(logger::info);
     }
 }
