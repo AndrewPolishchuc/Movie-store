@@ -14,9 +14,11 @@ import movie.storage.service.MovieService;
 import movie.storage.service.MovieSessionService;
 import movie.storage.service.OrderService;
 import movie.storage.service.ShoppingCartService;
+import org.apache.log4j.Logger;
 
 public class Main {
     private static Injector injector = Injector.getInstance("movie.storage");
+    private static final Logger logger = Logger.getLogger(Main.class);
 
     public static void main(String[] args) {
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
@@ -26,7 +28,7 @@ public class Main {
         Movie secondMovie = new Movie();
         secondMovie.setTitle("Suits");
         movieService.add(secondMovie);
-        movieService.getAll().forEach(System.out::println);
+        movieService.getAll().forEach(logger::info);
         CinemaHallService cinemaHallService
                 = (CinemaHallService) injector.getInstance(CinemaHallService.class);
         CinemaHall firstCinemaHall = new CinemaHall();
@@ -35,7 +37,7 @@ public class Main {
         CinemaHall secondCinemaHall = new CinemaHall();
         secondCinemaHall.setDescription("hall number 2");
         cinemaHallService.add(secondCinemaHall);
-        cinemaHallService.getAll().forEach(System.out::println);
+        cinemaHallService.getAll().forEach(logger::info);
         MovieSession firstMovieSession = new MovieSession();
         firstMovieSession.setCinemaHall(firstCinemaHall);
         firstMovieSession.setMovie(firstMovie);
@@ -65,6 +67,6 @@ public class Main {
         OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
         ShoppingCart shoppingCart = shoppingCartService.getByUser(bob);
         orderService.completeOrder(shoppingCart.getTickets(), bob);
-        orderService.getOrderHistory(bob).forEach(System.out::println);
+        orderService.getOrderHistory(bob).forEach(logger::info);
     }
 }
