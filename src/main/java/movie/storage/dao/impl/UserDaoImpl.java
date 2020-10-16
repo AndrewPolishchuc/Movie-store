@@ -6,19 +6,24 @@ import movie.storage.exception.DataProcessingException;
 import movie.storage.lib.Dao;
 import movie.storage.model.User;
 import movie.storage.util.HibernateUtil;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 @Dao
 public class UserDaoImpl implements UserDao {
+    private static final Logger logger = Logger.getLogger(UserDaoImpl.class);
+
     @Override
     public User add(User user) {
+        logger.info("Add user");
         Session session = null;
         Transaction transaction = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             session.save(user);
+            logger.info("User added: " + user);
             transaction.commit();
             return user;
         } catch (Exception e) {
@@ -35,6 +40,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Optional<User> findByEmail(String email) {
+        logger.info("Find user by email");
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("from User where email= :email", User.class)
                     .setParameter("email", email)

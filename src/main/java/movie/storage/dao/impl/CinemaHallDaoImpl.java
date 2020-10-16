@@ -6,14 +6,18 @@ import movie.storage.exception.DataProcessingException;
 import movie.storage.lib.Dao;
 import movie.storage.model.CinemaHall;
 import movie.storage.util.HibernateUtil;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
+    private static final Logger logger = Logger.getLogger(CinemaHallDaoImpl.class);
+
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
+        logger.info("Add cinema hall");
         Session session = null;
         Transaction transaction = null;
         try {
@@ -21,6 +25,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             transaction = session.beginTransaction();
             session.save(cinemaHall);
             transaction.commit();
+            logger.info("Cinema hall added: " + cinemaHall);
             return cinemaHall;
         } catch (Exception e) {
             if (transaction != null) {
@@ -37,6 +42,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
 
     @Override
     public List<CinemaHall> getAll() {
+        logger.info("Get all cinema halls");
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<CinemaHall> getAllCinemaHalls
                     = session.createQuery("from CinemaHall", CinemaHall.class);

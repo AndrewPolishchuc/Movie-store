@@ -7,13 +7,17 @@ import movie.storage.lib.Dao;
 import movie.storage.model.Order;
 import movie.storage.model.User;
 import movie.storage.util.HibernateUtil;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 @Dao
 public class OrderDaoImpl implements OrderDao {
+    private static final Logger logger = Logger.getLogger(OrderDaoImpl.class);
+
     @Override
     public Order add(Order order) {
+        logger.info("Add order");
         Session session = null;
         Transaction transaction = null;
         try {
@@ -21,6 +25,7 @@ public class OrderDaoImpl implements OrderDao {
             transaction = session.beginTransaction();
             session.save(order);
             transaction.commit();
+            logger.info("Order added: " + order);
             return order;
         } catch (Exception e) {
             if (transaction != null) {
@@ -36,6 +41,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List<Order> getOrderHistory(User user) {
+        logger.info("Get user`s order");
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("select distinct o from Order o "
                     + "left join fetch o.tickets "
