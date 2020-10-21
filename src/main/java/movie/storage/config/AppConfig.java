@@ -11,7 +11,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
 @Configuration
-@PropertySource("classpath.db.properties")
+@PropertySource("classpath:db.properties")
 @ComponentScan(basePackages = {
         "movie.storage.dao",
         "movie.storage.service"
