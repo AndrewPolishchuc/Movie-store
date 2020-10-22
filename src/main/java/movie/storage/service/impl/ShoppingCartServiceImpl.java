@@ -16,14 +16,12 @@ import org.springframework.stereotype.Service;
 public class ShoppingCartServiceImpl implements ShoppingCartService {
     private ShoppingCartDao shoppingCartDao;
     private TicketDao ticketDao;
-    private UserDao userDao;
 
     @Autowired
     public ShoppingCartServiceImpl(ShoppingCartDao shoppingCartDao,
-                                   TicketDao ticketDao, UserDao userDao) {
+                                   TicketDao ticketDao) {
         this.shoppingCartDao = shoppingCartDao;
         this.ticketDao = ticketDao;
-        this.userDao = userDao;
     }
 
     @Override
