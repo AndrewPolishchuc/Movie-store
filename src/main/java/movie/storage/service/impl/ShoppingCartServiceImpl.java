@@ -3,7 +3,6 @@ package movie.storage.service.impl;
 import java.util.ArrayList;
 import movie.storage.dao.ShoppingCartDao;
 import movie.storage.dao.TicketDao;
-import movie.storage.dao.UserDao;
 import movie.storage.model.MovieSession;
 import movie.storage.model.ShoppingCart;
 import movie.storage.model.Ticket;
