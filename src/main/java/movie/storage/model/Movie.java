@@ -5,7 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "movies")
 public class Movie {
@@ -15,39 +17,11 @@ public class Movie {
     private String title;
     private String description;
 
-    public Movie(String title, String description) {
-        this.title = title;
-        this.description = description;
-    }
-
-    public Movie(Long id) {
-        this.id = id;
-    }
-
     public Movie() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
+    public Movie(String title, String description) {
         this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
         this.description = description;
     }
 }

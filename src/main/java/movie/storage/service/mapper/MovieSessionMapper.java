@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MovieSessionMapper {
+    public static final String DATE_FORMAT = "d-MM-yyyy hh:mm:ss a";
     private final MovieService movieService;
     private final CinemaHallService cinemaHallService;
 
@@ -22,14 +23,20 @@ public class MovieSessionMapper {
     }
 
     public MovieSession convertDtoToMovieSession(MovieSessionRequestDto movieSessionDto) {
-        return new MovieSession(movieService.getById(movieSessionDto.getMovieId()),
-                cinemaHallService.getById(movieSessionDto.getCinemaHallId()),
-                LocalDateTime.parse(movieSessionDto.getShowTime(),
-                        DateTimeFormatter.ofPattern("d-MM-yyyy hh:mm:ss a")));
+        MovieSession movieSession = new MovieSession();
+        movieSession.setCinemaHall(cinemaHallService.getById(movieSessionDto.getCinemaHallId()));
+        movieSession.setMovie(movieService.getById(movieSessionDto.getMovieId()));
+        movieSession.setShowTime(LocalDateTime.parse(movieSessionDto.getShowTime(),
+                DateTimeFormatter.ofPattern(DATE_FORMAT)));
+        return movieSession;
     }
 
     public MovieSessionResponseDto convertMovieSessionToDto(MovieSession movieSession) {
-        return new MovieSessionResponseDto(movieSession.getCinemaHall().getId(),
-                movieSession.getMovie().getId(), movieSession.getShowTime().toString());
+        MovieSessionResponseDto movieSessionResponseDto = new MovieSessionResponseDto();
+        movieSessionResponseDto.setMovieSessionId(movieSession.getId());
+        movieSessionResponseDto.setMovieId(movieSession.getMovie().getId());
+        movieSessionResponseDto.setCinemaHallId(movieSession.getCinemaHall().getId());
+        movieSessionResponseDto.setShowTime(movieSession.getShowTime().toString());
+        return movieSessionResponseDto;
     }
 }
