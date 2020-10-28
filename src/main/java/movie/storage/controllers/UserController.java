@@ -1,7 +1,5 @@
 package movie.storage.controllers;
 
-import java.util.Optional;
-import movie.storage.model.User;
 import movie.storage.model.dto.UserResponseDto;
 import movie.storage.service.UserService;
 import movie.storage.service.mapper.UserMapper;
@@ -25,10 +23,6 @@ public class UserController {
 
     @GetMapping("/by-email")
     public UserResponseDto getUserByEmail(@RequestParam String email) {
-        Optional<User> user = userService.findByEmail(email);
-        if (user.isEmpty()) {
-            throw new RuntimeException("User is not found");
-        }
-        return userMapper.convertUserToDto(userService.findByEmail(email).get());
+        return userMapper.convertUserToDto(userService.findByEmail(email));
     }
 }

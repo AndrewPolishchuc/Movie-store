@@ -1,7 +1,6 @@
 package movie.storage.controllers;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import movie.storage.model.ShoppingCart;
 import movie.storage.model.User;
@@ -36,21 +35,14 @@ public class OrderController {
 
     @PostMapping("/complete")
     public void completeOrder(@RequestParam String email) {
-        Optional<User> user = userService.findByEmail(email);
-        if (user.isEmpty()) {
-            throw new RuntimeException("User is not found");
-        }
-        ShoppingCart shoppingCart = shoppingCartService.getByUser(user.get());
-        orderService.completeOrder(shoppingCart.getTickets(), user.get());
+        User user = userService.findByEmail(email);
+        ShoppingCart shoppingCart = shoppingCartService.getByUser(user);
+        orderService.completeOrder(shoppingCart.getTickets(), user);
     }
 
     @GetMapping
     public List<OrderResponseDto> getHistoryByUser(@RequestParam String email) {
-        Optional<User> user = userService.findByEmail(email);
-        if (user.isEmpty()) {
-            throw new RuntimeException("User is not found");
-        }
-        return orderService.getOrderHistory(user.get()).stream()
+        return orderService.getOrderHistory(userService.findByEmail(email)).stream()
                 .map(orderMapper::convertOrderToDto)
                 .collect(Collectors.toList());
     }

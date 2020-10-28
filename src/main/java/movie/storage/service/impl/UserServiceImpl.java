@@ -1,6 +1,5 @@
 package movie.storage.service.impl;
 
-import java.util.Optional;
 import movie.storage.dao.UserDao;
 import movie.storage.model.User;
 import movie.storage.service.UserService;
@@ -25,7 +24,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
-        return userDao.findByEmail(email);
+    public User findByEmail(String email) {
+        return userDao.findByEmail(email).get();
     }
 }

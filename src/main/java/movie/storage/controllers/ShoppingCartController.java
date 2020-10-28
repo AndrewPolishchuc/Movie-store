@@ -1,8 +1,6 @@
 package movie.storage.controllers;
 
-import java.util.Optional;
 import movie.storage.model.ShoppingCart;
-import movie.storage.model.User;
 import movie.storage.model.dto.MovieSessionRequestDto;
 import movie.storage.service.ShoppingCartService;
 import movie.storage.service.UserService;
@@ -32,21 +30,13 @@ public class ShoppingCartController {
 
     @GetMapping("/by-user")
     public ShoppingCart getByUser(@RequestParam String userEmail) {
-        Optional<User> user = userService.findByEmail(userEmail);
-        if (user.isEmpty()) {
-            throw new RuntimeException("User is not found");
-        }
-        return shoppingCartService.getByUser(user.get());
+        return shoppingCartService.getByUser(userService.findByEmail(userEmail));
     }
 
     @PostMapping("/movie-sessions")
     public void addMovieSession(@RequestParam String userEmail,
                                 @RequestBody MovieSessionRequestDto movieSession) {
-        Optional<User> user = userService.findByEmail(userEmail);
-        if (user.isEmpty()) {
-            throw new RuntimeException("User is not found");
-        }
         shoppingCartService.addSession(movieSessionMapper.convertDtoToMovieSession(movieSession),
-                user.get());
+                userService.findByEmail(userEmail));
     }
 }
