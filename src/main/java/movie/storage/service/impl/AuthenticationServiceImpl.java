@@ -1,6 +1,5 @@
 package movie.storage.service.impl;
 
-import java.util.Optional;
 import movie.storage.exception.AuthenticationException;
 import movie.storage.model.User;
 import movie.storage.service.AuthenticationService;
@@ -24,9 +23,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public User login(String email, String password) throws AuthenticationException {
-        Optional<User> user = userService.findByEmail(email);
-        if (user.isPresent() && isPasswordValid(user.get(), password)) {
-            return user.get();
+        User user = userService.findByEmail(email);
+        if (isPasswordValid(user, password)) {
+            return user;
         }
         throw new AuthenticationException("Login or password is incorrect");
     }
