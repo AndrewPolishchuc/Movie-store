@@ -1,5 +1,6 @@
 package movie.storage.controllers;
 
+import javax.validation.Valid;
 import movie.storage.model.dto.UserRequestDto;
 import movie.storage.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public void signUp(@RequestBody UserRequestDto userRequestDto) {
+    public void signUp(@RequestBody @Valid UserRequestDto userRequestDto) {
         authenticationService.register(userRequestDto.getEmail(), userRequestDto.getPassword());
     }
 }
