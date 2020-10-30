@@ -2,6 +2,7 @@ package movie.storage.controllers;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 import movie.storage.model.dto.MovieRequestDto;
 import movie.storage.model.dto.MovieResponseDto;
 import movie.storage.service.MovieService;
@@ -33,7 +34,7 @@ public class MovieController {
     }
 
     @PostMapping
-    public void addMovie(@RequestBody MovieRequestDto movieRequestDto) {
+    public void addMovie(@RequestBody @Valid MovieRequestDto movieRequestDto) {
         movieService.add(movieMapper.convertDtoToMovie(movieRequestDto));
     }
 }

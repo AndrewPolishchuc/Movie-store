@@ -10,10 +10,10 @@ import movie.storage.service.ShoppingCartService;
 import movie.storage.service.UserService;
 import movie.storage.service.mapper.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/orders")
@@ -34,15 +34,16 @@ public class OrderController {
     }
 
     @PostMapping("/complete")
-    public void completeOrder(@RequestParam String email) {
-        User user = userService.findByEmail(email);
+    public void completeOrder(Authentication authenticationUser) {
+        User user = userService.findByEmail(authenticationUser.getName());
         ShoppingCart shoppingCart = shoppingCartService.getByUser(user);
         orderService.completeOrder(shoppingCart.getTickets(), user);
     }
 
     @GetMapping
-    public List<OrderResponseDto> getHistoryByUser(@RequestParam String email) {
-        return orderService.getOrderHistory(userService.findByEmail(email)).stream()
+    public List<OrderResponseDto> getHistoryByUser(Authentication authenticationUser) {
+        return orderService.getOrderHistory(userService.findByEmail(authenticationUser.getName()))
+                .stream()
                 .map(orderMapper::convertOrderToDto)
                 .collect(Collectors.toList());
     }

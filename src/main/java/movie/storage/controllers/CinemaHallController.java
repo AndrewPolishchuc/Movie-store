@@ -2,6 +2,7 @@ package movie.storage.controllers;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 import movie.storage.model.dto.CinemaHallRequestDto;
 import movie.storage.model.dto.CinemaHallResponseDto;
 import movie.storage.service.CinemaHallService;
@@ -27,7 +28,7 @@ public class CinemaHallController {
     }
 
     @PostMapping
-    void addCinemaHall(@RequestBody CinemaHallRequestDto cinemaHallRequestDto) {
+    void addCinemaHall(@RequestBody @Valid CinemaHallRequestDto cinemaHallRequestDto) {
         cinemaHallService.add(cinemaHallMapper.convertDtoToCinemaHall(cinemaHallRequestDto));
     }
 

@@ -3,6 +3,7 @@ package movie.storage.controllers;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 import movie.storage.model.dto.MovieSessionRequestDto;
 import movie.storage.model.dto.MovieSessionResponseDto;
 import movie.storage.service.MovieSessionService;
@@ -30,7 +31,7 @@ public class MovieSessionController {
     }
 
     @PostMapping
-    public void addMovieSession(@RequestBody MovieSessionRequestDto movieSessionDto) {
+    public void addMovieSession(@RequestBody @Valid MovieSessionRequestDto movieSessionDto) {
         movieSessionService.add(movieSessionMapper.convertDtoToMovieSession(movieSessionDto));
     }
 
